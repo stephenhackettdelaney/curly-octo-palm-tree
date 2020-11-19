@@ -20,14 +20,6 @@ const COLORS = [
     '#0D54BF',
   ]
 
-  function sumChars(str) {
-    let sum = 0
-    for (let i = 0; i < str.length; i++) {
-      sum += str.charCodeAt(i)
-    }
-  
-    return sum
-  }
 
 const ListHeader = ({day, opening, closing, index = 0}) => {
     return (
@@ -40,29 +32,28 @@ const ListHeader = ({day, opening, closing, index = 0}) => {
     )
 }
 
-const ListStaff = ({employees, index = 0 }) => {
-    return employees.map(({ name }) => <li style={{fontWeight: 200, fontSize: '28px', marginTop: '6px'}}>{name}</li>)
-}
+const ListStaff = ({ employees }) => employees.map(({ name }) => <li style={{fontWeight: 200, fontSize: '28px', marginTop: '6px'}}>{name}</li>)
 
 
+const results = createRoster()
 
 const Roster = () => {  
     
-    const results = createRoster()
     return (
         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gridGap: '12px', padding: '16px'}}>
-            {results.map((result, index) => {
+            {results.map(({ day, opening_hours, closing_hours, employees }, index) => {
                 return (
-                    <div>
+                    <div key={day}>
                         <ListHeader 
-                            day={result.day}
-                            opening={result.opening_hours}
-                            closing={result.closing_hours}
+                            day={day}
+                            opening={opening_hours}
+                            closing={closing_hours}
                             index={index + 1}
                         />
-                        <ul key={result.day} style={{listStyle: 'none', padding: '0 0 0 8px' }}>
+                        <ul key={day} style={{listStyle: 'none', padding: '0 0 0 8px' }}>
                             <ListStaff 
-                                employees={result.employees}
+                                employees={employees}
+                                key={employees.name}
                             />
                         </ul>
                     </div>

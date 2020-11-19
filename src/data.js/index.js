@@ -34,18 +34,6 @@ const daysPerWeek = [
 
   const employees = [
     {
-      name: 'Ella',
-      type: 'full-time',
-      max_hours: 40,
-      hours_thisWeek: null,
-    },
-    {
-      name: 'Charlie',
-      type: 'full-time',
-      max_hours: 40,
-      hours_thisWeek: null,
-    },
-    {
       name: 'Stephen',
       type: 'full-time',
       max_hours: 40,
@@ -97,7 +85,7 @@ const daysPerWeek = [
 
   const randomIndex = (employees, staffLimit) => {
     let random
-    random = Math.floor(Math.random() * (employees.length - staffLimit))
+    random = Math.floor(Math.random() * (employees.length - staffLimit + 1))
     if(random < 0){
       random = 0
     }
@@ -105,51 +93,25 @@ const daysPerWeek = [
     return random
   }
 
-
-  const loop = (number, staffNeeded, employees) => {
-    console.log('Starting loop')
-
-    var staff = []
-    var i = number
-    console.log('i ', i)
-    var initNum = number
-
-    do {
-      console.log('I in DO: ', i)
-      console.log('with staffNeeded: ', i + staffNeeded)
-      console.log('STAFF NEEDED: ', staffNeeded)
-      console.log('DOING STUFF')
-      staff.push(employees[i])
-      i++
-    }
-    while(i < initNum + staffNeeded)
-
-    return staff
-  }
-
-
-
 export const createRoster = () => {
-      const currentWeek = daysPerWeek.map((day, index) => {
 
-        const number = randomIndex(employees, day.staff_needed)
+      const currentWeek = daysPerWeek.map(day => {
+        const { staff_needed } = day
 
-        const staff = loop(number, day.staff_needed, employees)
+        const number = randomIndex(employees, staff_needed)
 
-        // const staff = employees.filter((employee, i) => {
-        //   // console.log('Start')
-        //   if(i === number){
-        //     // console.log('NUM is true')
-        //     // if(i <= i + day.staff_needed){
-        //       // console.log('Employees: ', employee)
-        //       return employee
-        //     // }
-        //   }
-        // })
+        const staff = employees.reduce((acc, curr, index ) => {
+          if((index >= number) && (index < (number + staff_needed))){
+             return [ ...acc, curr ] 
+          }
+
+          return acc
+
+        }, [])
 
         const roster = {
           ...day,
-          employees: [...staff]
+          employees: staff
         }
         
         return roster
