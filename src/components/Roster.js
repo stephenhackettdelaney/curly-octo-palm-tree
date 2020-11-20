@@ -18,6 +18,7 @@ const COLORS = [
     '#0DBFBF',
     '#0D89BF',
     '#0D54BF',
+    'ROYALBLUE'
   ]
 
 
