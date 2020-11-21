@@ -1,5 +1,6 @@
 import React from 'react'
-import { createRoster } from '../data.js'
+import { daysPerWeek, employees } from '../dummyData'
+import { createRoster } from '../functions'
 
 const COLORS = [
     '#0D1FBF',
@@ -35,11 +36,10 @@ const ListHeader = ({day, opening, closing, index = 0}) => {
 
 const ListStaff = ({ employees }) => employees.map(({ name }) => <li style={{fontWeight: 200, fontSize: '28px', marginTop: '6px'}}>{name}</li>)
 
-
-const results = createRoster()
+const results = createRoster(daysPerWeek, employees)
 
 const Roster = () => {  
-    
+
     return (
         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gridGap: '12px', padding: '16px'}}>
             {results.map(({ day, opening_hours, closing_hours, employees }, index) => {
