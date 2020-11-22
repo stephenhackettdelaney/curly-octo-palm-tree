@@ -1,5 +1,7 @@
 const EMPLOYEES = 'EMPLOYEES'
+const ROSTER = 'ROSTER'
 
 export {
-    EMPLOYEES
+    EMPLOYEES,
+    ROSTER,
 }

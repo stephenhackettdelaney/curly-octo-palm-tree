@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
-import { employees } from './functions'
+import { employees, roster } from './functions'
 
 export default combineReducers({
     employees,
+    roster,
 })
