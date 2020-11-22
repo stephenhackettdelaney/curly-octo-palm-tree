@@ -1,28 +1,43 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { employees } from './redux/actions'
+import { employees, roster } from './redux/actions'
 
-import { employees as available } from './dummyData'
+import { daysPerWeek, employees as available } from './dummyData'
+import { createRoster } from './functions'
 
 import { Roster } from './components'
 import './App.css';
 
 
 
-function App({ dispatch, employees }) {
+
+
+function App({ dispatch, employees, ros }) {
 
   useEffect(() => {
+    const currentRos = createRoster(daysPerWeek, available)
+
     dispatch(employees(available))
-  })
+    dispatch(roster(currentRos))
+  }, [ dispatch, employees ])
   
   return (
-      <Roster />
+      <Roster
+      ros={ros} 
+      />
     )
 }
 
 const mapDispatchToState = dispatch => ({
   employees,
+  roster,
   dispatch,
 })
 
-export default connect(null, mapDispatchToState)(App);
+const mapStateToProps = state => {
+  return {
+    ros: state.roster
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToState)(App);
