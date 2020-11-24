@@ -1,7 +1,6 @@
 export const daysPerWeek = [
     {
       day: 'Monday',
-      employees: ['This is a test'],
       opening_hours: '9:00',
       closing_hours: '17:00',
       staff_needed: 2,
@@ -36,49 +35,57 @@ export const daysPerWeek = [
     {
       name: 'Stephen',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Rebecca',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Matthew',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Ben',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Derek',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Granny',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Dad',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     },
     {
       name: 'Mum',
       type: 'full-time',
-      max_hours: 40,
+      max_hours: 16,
       hours_thisWeek: null,
+      days_thisWeek: []
     }
   ]

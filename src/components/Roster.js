@@ -20,7 +20,7 @@ const COLORS = [
     'ROYALBLUE'
   ]
 
-const ListHeader = ({day, opening, closing, index = 0}) => {
+const ListHeader = ({ day, opening, closing, index = 0 }) => {
     return (
         <div style={{background: COLORS[index % COLORS.length], padding: '12px', borderRadius: '4px'}}>
             <div style={{fontSize: '30px', fontWeight: 600, color: 'white'}}>{day}</div>
@@ -31,30 +31,72 @@ const ListHeader = ({day, opening, closing, index = 0}) => {
     )
 }
 
-const ListStaff = ({ employees }) => employees.map(({ name }) => <li style={{fontWeight: 200, fontSize: '28px', marginTop: '6px'}}>{name}</li>)
+const ListStaff = (({ employees }) => {
 
-const Roster = ({ ros }) => {  
-    console.log('ROS: ', ros)
+    const list = employees && employees.map(({ name }) => {
+        return (
+            <li style={{fontWeight: 200, fontSize: '28px', marginTop: '6px'}}>
+                {name}
+            </li>
+        )
+    })
+
     return (
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gridGap: '12px', padding: '16px'}}>
+        <ul style={{ listStyle: 'none', padding: '0 0 0 8px' }}>
+          {list}
+        </ul>
+    )
+    
+})
+
+
+const Total = ({ peeps }) => {
+    // Would prob like to use REACT TABLE for this
+    console.log('peeps: ', peeps)
+    const hoursList = peeps.map(person => {
+        const { name, hours_thisWeek, days_thisWeek} = person
+        const isNull = hours_thisWeek === null
+
+        return (
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', border: '2px solid red', gridGap: '12px'  }}>
+                <h2>{`${name}`}</h2>
+                {isNull ? <h2>{`0`}</h2> : <h2>{`${hours_thisWeek} hrs`}</h2> }
+                {isNull ? <h2>{`none`}</h2> : <h2 style={{marginRight: '6px'}}>{`${days_thisWeek} (${days_thisWeek.length})`}</h2> }
+            </div>
+        )
+    })
+
+
+    return (
+        <>
+            <h1>Total Hours</h1>
+            {hoursList}
+        </>
+    )
+}
+
+const Roster = ({ ros, people }) => {  
+    console.log('people: ', people)
+    return (
+        <div style={{display: 'grid', gridTemplateColumns: '1fr', padding: '16px'}}>
             {ros.map(({ day, opening_hours, closing_hours, employees }, index) => {
                 return (
-                    <div key={day}>
+                    <>
                         <ListHeader 
+                            key={day}
                             day={day}
                             opening={opening_hours}
                             closing={closing_hours}
                             index={index + 1}
                         />
-                        <ul key={day} style={{listStyle: 'none', padding: '0 0 0 8px' }}>
-                            <ListStaff 
-                                employees={employees}
-                                key={employees.name}
-                            />
-                        </ul>
-                    </div>
+                        <ListStaff 
+                            employees={employees}
+                            key={employees.name}
+                        />
+                    </>
                 )
             })}
+            <Total peeps={people} />
         </div>
     )
 }
