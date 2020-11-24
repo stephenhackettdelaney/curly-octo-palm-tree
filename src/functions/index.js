@@ -1,25 +1,32 @@
+import moment from 'moment'
 
+const shiftDuration = (opening, closing) => {
 
-const randomIndex = (employees, staffLimit) => {
-    let random
-    random = Math.floor(Math.random() * (employees.length - staffLimit + 1))
-    if(random < 0){
-      random = 0
-    }
+  const open = moment(opening, 'HH:mm:ss a')
+  const close = moment(closing, 'HH:mm:ss a')
 
-    return random
-  }
+  const duration = moment.duration(close.diff(open))
+
+  return parseInt(duration.asHours())
+}
 
 export const createRoster = (daysPerWeek, employees) => {
 
       const currentWeek = daysPerWeek.map(day => {
-        const { staff_needed } = day
+        const { staff_needed, opening_hours, closing_hours} = day
 
-        const number = randomIndex(employees, staff_needed)
+        const hours = shiftDuration(opening_hours, closing_hours)
+        const staff = employees.reduce((acc, curr) => {
 
-        const staff = employees.reduce((acc, curr, index ) => {
-          if((index >= number) && (index < (number + staff_needed))){
-             return [ ...acc, curr ] 
+          const { hours_thisWeek, max_hours } = curr
+          const notMaxHours = hours_thisWeek < max_hours
+          const notStaffMax = acc.length < staff_needed 
+
+            if(notMaxHours && notStaffMax){
+              curr.hours_thisWeek = curr.hours_thisWeek + hours
+              curr.days_thisWeek = [ ...curr.days_thisWeek, day.day ]
+              
+              return [ ...acc, curr ] 
           }
 
           return acc

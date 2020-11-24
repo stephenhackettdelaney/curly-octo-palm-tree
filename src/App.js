@@ -12,18 +12,18 @@ import './App.css';
 
 
 
-function App({ dispatch, employees, ros }) {
+function App({ dispatch, employees, ros, people }) {
 
   useEffect(() => {
     const currentRos = createRoster(daysPerWeek, available)
-
     dispatch(employees(available))
     dispatch(roster(currentRos))
   }, [ dispatch, employees ])
   
   return (
       <Roster
-      ros={ros} 
+        ros={ros} 
+        people={people}
       />
     )
 }
@@ -36,7 +36,8 @@ const mapDispatchToState = dispatch => ({
 
 const mapStateToProps = state => {
   return {
-    ros: state.roster
+    ros: state.roster,
+    people: state.employees,
   }
 }
 
